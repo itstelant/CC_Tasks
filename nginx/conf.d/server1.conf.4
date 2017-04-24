@@ -1,0 +1,19 @@
+server {
+    	
+   listen 80; 	
+    server_name cctest,com;	 
+    root /home/ubuntu/www;
+
+    location /cctest {
+    }
+
+    location /images {		
+    root /home/ubuntu/data;	
+    }
+    
+    location /.well-known/acme-challenge {  
+        root /home/ubuntu/www/letsencrypt;
+    }
+
+}
+
