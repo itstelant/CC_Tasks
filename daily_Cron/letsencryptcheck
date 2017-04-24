@@ -1,0 +1,33 @@
+#!/bin/bash
+
+web_service='nginx'  
+config_file="/srv/letsencrypt/config/cctest.conf"
+limit=5
+lencr_dir='/opt/letsencrypt'  
+domain=cctest.ga  
+cert_dir="/etc/letsencrypt/live/$domain/fullchain.pem"
+
+if [ ! -f $cert_dir ]; then  
+        echo "The certificate file is not found for domain $domain."
+fi
+
+exp=$(date -d "`openssl x509 -in $cert_dir -text -noout|grep "Not After"|cut -c 25-`" +%s)  
+datenow=$(date -d "now" +%s)  
+days_exp=$(echo \($exp-$datenow\)/86400|bc)
+
+
+echo "The expiration date for $domain is now being checked..."
+
+if [ "$days_exp" -gt "$limit" ] ; then 
+	     
+	echo "The certificate does not need to renew. It is valid for ($days_exp)."
+        exit 0;
+
+else  
+       echo "The certificate for $domain is expirng soon. It will renew now..."
+      $lencr_dir/letsencrypt-auto certonly -a webroot --agree-tos --renew-by-default --config $config_file
+       echo "Reloading $web_service"
+       /usr/sbin/service $web_service reload
+       echo "Renewal process finished for domain $domain"
+       exit 0;
+fi  
