@@ -120,10 +120,10 @@ class S3
 	 */
 	
 	/**
-	 public static $useSSLValidation = true;
+	* public static $useSSLValidation = true;
 	*/
 
-	public static $useSSLValidation = false;
+	public static $useSSLValidation = true;
 
 	/**
 	 * Use SSL version
