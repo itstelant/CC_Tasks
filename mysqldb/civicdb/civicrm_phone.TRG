@@ -1,0 +1,7 @@
+TYPE=TRIGGERS
+triggers='CREATE DEFINER=`civicuser`@`localhost` TRIGGER civicrm_phone_after_insert after insert ON civicrm_phone FOR EACH ROW BEGIN  \nUPDATE civicrm_contact SET modified_date = CURRENT_TIMESTAMP WHERE id = NEW.contact_id;\n END' 'CREATE DEFINER=`civicuser`@`localhost` TRIGGER civicrm_phone_before_insert before insert ON civicrm_phone FOR EACH ROW BEGIN  \nSET NEW.phone_numeric = civicrm_strip_non_numeric(NEW.phone);\n END' 'CREATE DEFINER=`civicuser`@`localhost` TRIGGER civicrm_phone_after_update after update ON civicrm_phone FOR EACH ROW BEGIN  \nUPDATE civicrm_contact SET modified_date = CURRENT_TIMESTAMP WHERE id = NEW.contact_id;\n END' 'CREATE DEFINER=`civicuser`@`localhost` TRIGGER civicrm_phone_before_update before update ON civicrm_phone FOR EACH ROW BEGIN  \nSET NEW.phone_numeric = civicrm_strip_non_numeric(NEW.phone);\n END' 'CREATE DEFINER=`civicuser`@`localhost` TRIGGER civicrm_phone_after_delete after delete ON civicrm_phone FOR EACH ROW BEGIN  \nUPDATE civicrm_contact SET modified_date = CURRENT_TIMESTAMP WHERE id = OLD.contact_id;\n END'
+sql_modes=0 0 0 0 0
+definers='civicuser@localhost' 'civicuser@localhost' 'civicuser@localhost' 'civicuser@localhost' 'civicuser@localhost'
+client_cs_names='utf8' 'utf8' 'utf8' 'utf8' 'utf8'
+connection_cl_names='utf8_general_ci' 'utf8_general_ci' 'utf8_general_ci' 'utf8_general_ci' 'utf8_general_ci'
+db_cl_names='utf8_general_ci' 'utf8_general_ci' 'utf8_general_ci' 'utf8_general_ci' 'utf8_general_ci'
